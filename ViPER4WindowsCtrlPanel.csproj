@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{09316E55-3F1B-47BA-AFE4-3D7E680A01DB}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>ViPER4WindowsCtrlPanel</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>ViPER4WindowsBin</RootNamespace>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.1</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Win32Resource>
+    </Win32Resource>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>ViPER4WindowsBin.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="RegHelper.cs" />
+    <Compile Include="frmLatency.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEqualizer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCompressorLite.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEQPreset.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrayMenuPreset.cs" />
+    <Compile Include="frmVirtualization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChannelPan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReverbPreset.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Version.cs" />
+    <Compile Include="frmCompressor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCheckUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GlobalMessages.cs" />
+    <Compile Include="Utils\ConfigFile.cs" />
+    <Compile Include="Utils\FolderExplorer.cs" />
+    <Compile Include="Utils\Parameters.cs" />
+    <Compile Include="Utils\RuntimeUtils.cs" />
+    <Compile Include="Utils\Win32GDI\DRAW_QUALITY.cs" />
+    <Compile Include="Utils\Win32GDI\GDIMutex.cs" />
+    <Compile Include="Utils\Win32GDI\GDIRender.cs" />
+    <Compile Include="UIControls\OpenFileBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIControls\OnOffSwitch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIControls\ButtonBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIControls\TwoSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIControls\SingleButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIControls\HSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIControls\VSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIControls\EQShape.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIControls\IRShape.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.cs" />
+    <Compile Include="Properties\Settings.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="frmAbout.resx" />
+    <EmbeddedResource Include="frmChannelPan.resx" />
+    <EmbeddedResource Include="frmCheckUpdate.resx" />
+    <EmbeddedResource Include="frmCompressor.resx" />
+    <EmbeddedResource Include="frmCompressorLite.resx" />
+    <EmbeddedResource Include="frmEQPreset.resx" />
+    <EmbeddedResource Include="frmEqualizer.resx" />
+    <EmbeddedResource Include="frmLatency.resx" />
+    <EmbeddedResource Include="frmMain.resx" />
+    <EmbeddedResource Include="frmReverbPreset.resx" />
+    <EmbeddedResource Include="frmSettings.resx" />
+    <EmbeddedResource Include="frmVirtualization.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx" />
+    <EmbeddedResource Include="UIControls\ButtonBox.resx" />
+    <EmbeddedResource Include="UIControls\EQShape.resx" />
+    <EmbeddedResource Include="UIControls\HSlider.resx" />
+    <EmbeddedResource Include="UIControls\IRShape.resx" />
+    <EmbeddedResource Include="UIControls\OnOffSwitch.resx" />
+    <EmbeddedResource Include="UIControls\OpenFileBox.resx" />
+    <EmbeddedResource Include="UIControls\SingleButton.resx" />
+    <EmbeddedResource Include="UIControls\TwoSelector.resx" />
+    <EmbeddedResource Include="UIControls\VSlider.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Res\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+    <Content Include="icon.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
