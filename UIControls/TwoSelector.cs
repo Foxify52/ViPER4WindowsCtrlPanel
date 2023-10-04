@@ -5,155 +5,153 @@ using System.Windows.Forms;
 
 namespace ViPER4WindowsBin.UIControls
 {
-  public class TwoSelector : UserControl
-  {
-    private object m_objLeftObj;
-    private object m_objRightObj;
-    private TwoSelector.SelectorPosition m_spCurrentPosition;
-    private IContainer components;
-
-    private event TwoSelector.SelectorChangeEventDelegate SelectorChanged;
-
-    public event TwoSelector.SelectorChangeEventDelegate SelectorChangeNotify
+    public class TwoSelector : UserControl
     {
-      add => this.SelectorChanged += value;
-      remove => this.SelectorChanged -= value;
-    }
+        private object m_objLeftObj;
+        private object m_objRightObj;
+        private SelectorPosition m_spCurrentPosition;
+        private readonly IContainer components;
 
-    public TwoSelector()
-    {
-      this.InitializeComponent();
-      this.m_objLeftObj = (object) null;
-      this.m_objRightObj = (object) null;
-      this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-      this.SetStyle(ControlStyles.DoubleBuffer, true);
-      this.SetStyle(ControlStyles.ResizeRedraw, true);
-      this.SetStyle(ControlStyles.StandardClick, true);
-      this.SetStyle(ControlStyles.Selectable, true);
-      this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-      this.SetStyle(ControlStyles.UserPaint, true);
-      this.BackColor = Color.Transparent;
-    }
+        private event SelectorChangeEventDelegate SelectorChanged;
 
-    public object LeftObject
-    {
-      get => this.m_objLeftObj;
-      set => this.m_objLeftObj = value;
-    }
-
-    public object RightObject
-    {
-      get => this.m_objRightObj;
-      set => this.m_objRightObj = value;
-    }
-
-    public object CurrentObject
-    {
-      get => this.m_spCurrentPosition == TwoSelector.SelectorPosition.SELECTOR_ON_LEFT ? this.m_objLeftObj : this.m_objRightObj;
-      set
-      {
-        if (this.m_objLeftObj == this.m_objRightObj)
-          return;
-        if (value == this.m_objLeftObj)
+        public event SelectorChangeEventDelegate SelectorChangeNotify
         {
-          this.m_spCurrentPosition = TwoSelector.SelectorPosition.SELECTOR_ON_LEFT;
-          if (this.SelectorChanged != null)
-            this.SelectorChanged(this.m_spCurrentPosition, this.m_objLeftObj, this);
-          this.Invalidate();
+            add => SelectorChanged += value;
+            remove => SelectorChanged -= value;
         }
-        else
+
+        public TwoSelector()
         {
-          if (value != this.m_objRightObj)
-            return;
-          this.m_spCurrentPosition = TwoSelector.SelectorPosition.SELECTOR_ON_RIGHT;
-          if (this.SelectorChanged != null)
-            this.SelectorChanged(this.m_spCurrentPosition, this.m_objRightObj, this);
-          this.Invalidate();
+            InitializeComponent();
+            m_objLeftObj = null;
+            m_objRightObj = null;
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.DoubleBuffer, true);
+            SetStyle(ControlStyles.ResizeRedraw, true);
+            SetStyle(ControlStyles.StandardClick, true);
+            SetStyle(ControlStyles.Selectable, true);
+            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.UserPaint, true);
+            BackColor = Color.Transparent;
         }
-      }
-    }
 
-    public TwoSelector.SelectorPosition Selector
-    {
-      get => this.m_spCurrentPosition;
-      set
-      {
-        this.m_spCurrentPosition = value;
-        if (this.SelectorChanged != null)
+        public object LeftObject
         {
-          if (this.m_spCurrentPosition == TwoSelector.SelectorPosition.SELECTOR_ON_LEFT)
-            this.SelectorChanged(this.m_spCurrentPosition, this.m_objLeftObj, this);
-          else
-            this.SelectorChanged(this.m_spCurrentPosition, this.m_objRightObj, this);
+            get => m_objLeftObj;
+            set => m_objLeftObj = value;
         }
-        this.Invalidate();
-      }
-    }
 
-    protected override void OnPaint(PaintEventArgs e)
-    {
-      Graphics graphics = e.Graphics;
-      graphics.SmoothingMode = SmoothingMode.HighQuality;
-      graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-      graphics.Clear(Color.White);
-      graphics.DrawRectangle(new Pen(Color.Gray, 1f), 0, 0, this.Width, this.Height);
-      if (this.m_spCurrentPosition == TwoSelector.SelectorPosition.SELECTOR_ON_LEFT)
-        graphics.FillEllipse(Brushes.SteelBlue, new RectangleF()
+        public object RightObject
         {
-          X = 2f,
-          Y = 2f,
-          Width = (float) this.ClientRectangle.Height - 4f,
-          Height = (float) this.ClientRectangle.Height - 4f
-        });
-      else
-        graphics.FillEllipse(Brushes.SteelBlue, new RectangleF()
+            get => m_objRightObj;
+            set => m_objRightObj = value;
+        }
+
+        public object CurrentObject
         {
-          X = (float) ((double) this.ClientRectangle.Width - 2.0 - ((double) this.ClientRectangle.Height - 4.0)),
-          Y = 2f,
-          Width = (float) this.ClientRectangle.Height - 4f,
-          Height = (float) this.ClientRectangle.Height - 4f
-        });
-    }
+            get => m_spCurrentPosition == SelectorPosition.SELECTOR_ON_LEFT ? m_objLeftObj : m_objRightObj;
+            set
+            {
+                if (m_objLeftObj == m_objRightObj)
+                    return;
+                if (value == m_objLeftObj)
+                {
+                    m_spCurrentPosition = SelectorPosition.SELECTOR_ON_LEFT;
+                    SelectorChanged?.Invoke(m_spCurrentPosition, m_objLeftObj, this);
+                    Invalidate();
+                }
+                else
+                {
+                    if (value != m_objRightObj)
+                        return;
+                    m_spCurrentPosition = SelectorPosition.SELECTOR_ON_RIGHT;
+                    SelectorChanged?.Invoke(m_spCurrentPosition, m_objRightObj, this);
+                    Invalidate();
+                }
+            }
+        }
 
-    private void TwoSelector_MouseUp(object sender, MouseEventArgs e)
-    {
-      if (e.Button != MouseButtons.Left)
-        return;
-      if (this.m_spCurrentPosition == TwoSelector.SelectorPosition.SELECTOR_ON_LEFT)
-        this.Selector = TwoSelector.SelectorPosition.SELECTOR_ON_RIGHT;
-      else
-        this.Selector = TwoSelector.SelectorPosition.SELECTOR_ON_LEFT;
-    }
+        public SelectorPosition Selector
+        {
+            get => m_spCurrentPosition;
+            set
+            {
+                m_spCurrentPosition = value;
+                if (SelectorChanged != null)
+                {
+                    if (m_spCurrentPosition == SelectorPosition.SELECTOR_ON_LEFT)
+                        SelectorChanged(m_spCurrentPosition, m_objLeftObj, this);
+                    else
+                        SelectorChanged(m_spCurrentPosition, m_objRightObj, this);
+                }
+                Invalidate();
+            }
+        }
 
-    protected override void Dispose(bool disposing)
-    {
-      if (disposing && this.components != null)
-        this.components.Dispose();
-      base.Dispose(disposing);
-    }
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Graphics graphics = e.Graphics;
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
+            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            graphics.Clear(Color.White);
+            graphics.DrawRectangle(new Pen(Color.Gray, 1f), 0, 0, Width, Height);
+            if (m_spCurrentPosition == SelectorPosition.SELECTOR_ON_LEFT)
+                graphics.FillEllipse(Brushes.SteelBlue, new RectangleF()
+                {
+                    X = 2f,
+                    Y = 2f,
+                    Width = ClientRectangle.Height - 4f,
+                    Height = ClientRectangle.Height - 4f
+                });
+            else
+                graphics.FillEllipse(Brushes.SteelBlue, new RectangleF()
+                {
+                    X = (float)(ClientRectangle.Width - 2.0 - (ClientRectangle.Height - 4.0)),
+                    Y = 2f,
+                    Width = ClientRectangle.Height - 4f,
+                    Height = ClientRectangle.Height - 4f
+                });
+        }
 
-    private void InitializeComponent()
-    {
-      this.SuspendLayout();
-      this.AutoScaleDimensions = new SizeF(6f, 12f);
-      this.AutoScaleMode = AutoScaleMode.Font;
-      this.BackColor = Color.Transparent;
-      this.DoubleBuffered = true;
-      this.Name = nameof (TwoSelector);
-      this.Size = new Size(107, 28);
-      this.MouseUp += new MouseEventHandler(this.TwoSelector_MouseUp);
-      this.ResumeLayout(false);
-    }
+        private void TwoSelector_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+                return;
+            if (m_spCurrentPosition == SelectorPosition.SELECTOR_ON_LEFT)
+                Selector = SelectorPosition.SELECTOR_ON_RIGHT;
+            else
+                Selector = SelectorPosition.SELECTOR_ON_LEFT;
+        }
 
-    public enum SelectorPosition
-    {
-      SELECTOR_ON_LEFT,
-      SELECTOR_ON_RIGHT,
-    }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && components != null)
+                components.Dispose();
+            base.Dispose(disposing);
+        }
 
-    public delegate void SelectorChangeEventDelegate(
-      TwoSelector.SelectorPosition spCurrentPosition,
-      object objSelected,
-      TwoSelector objSender);
-  }
+        private void InitializeComponent()
+        {
+            SuspendLayout();
+            AutoScaleDimensions = new SizeF(6f, 12f);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Transparent;
+            DoubleBuffered = true;
+            Name = nameof(TwoSelector);
+            Size = new Size(107, 28);
+            MouseUp += new MouseEventHandler(TwoSelector_MouseUp);
+            ResumeLayout(false);
+        }
+
+        public enum SelectorPosition
+        {
+            SELECTOR_ON_LEFT,
+            SELECTOR_ON_RIGHT,
+        }
+
+        public delegate void SelectorChangeEventDelegate(
+          SelectorPosition spCurrentPosition,
+          object objSelected,
+          TwoSelector objSender);
+    }
 }

@@ -8,652 +8,660 @@ using ViPER4WindowsBin.Utils;
 
 namespace ViPER4WindowsBin
 {
-  public class frmEqualizer : Form
-  {
-    private IContainer components;
-    private Label label_Equalizer_Enable;
-    private OnOffSwitch onOffSwitch_Equalizer;
-    private VSlider vSlider1;
-    private VSlider vSlider2;
-    private VSlider vSlider3;
-    private VSlider vSlider4;
-    private VSlider vSlider5;
-    private VSlider vSlider6;
-    private VSlider vSlider7;
-    private VSlider vSlider8;
-    private VSlider vSlider9;
-    private VSlider vSlider10;
-    private VSlider vSlider11;
-    private VSlider vSlider12;
-    private VSlider vSlider13;
-    private VSlider vSlider14;
-    private VSlider vSlider15;
-    private VSlider vSlider16;
-    private VSlider vSlider17;
-    private VSlider vSlider18;
-    private Label label1;
-    private Label label2;
-    private Label label3;
-    private Label label4;
-    private Label label5;
-    private Label label6;
-    private Label label7;
-    private Label label8;
-    private Label label9;
-    private Label label10;
-    private Label label11;
-    private Label label12;
-    private Label label13;
-    private Label label14;
-    private Label label15;
-    private Label label16;
-    private Label label17;
-    private Label label18;
-    private SingleButton singleButton_Preset;
-    private SingleButton singleButton_OK;
-    private Label label_dB_Max;
-    private Label label_dB_Min;
-    private Label label_dB_Zero;
-    private CheckBox checkBox_RealtimeAdjust;
-    private bool m_bEQEnabled;
-    private float[] m_faEQBands = new float[18];
-    private List<VSlider> m_ctlEQBandList = new List<VSlider>();
-    private RuntimeUtils.ConfigProxy._ParamOfBaseSystem m_paramBaseSystem;
-    private RuntimeUtils.ConfigProxy._ParamOfMusicMode m_paramMusicMode;
-    private RuntimeUtils.ConfigProxy._ParamOfMovieMode m_paramMovieMode;
-    private RuntimeUtils.ConfigProxy._ParamOfFreestyle m_paramFreestyle;
-    private RuntimeUtils.ConfigProxy m_cpConfigProxy;
-
-    protected override void Dispose(bool disposing)
+    public class FrmEqualizer : Form
     {
-      if (disposing && this.components != null)
-        this.components.Dispose();
-      base.Dispose(disposing);
-    }
+        private readonly IContainer components;
+        private Label label_Equalizer_Enable;
+        private OnOffSwitch onOffSwitch_Equalizer;
+        private VSlider vSlider1;
+        private VSlider vSlider2;
+        private VSlider vSlider3;
+        private VSlider vSlider4;
+        private VSlider vSlider5;
+        private VSlider vSlider6;
+        private VSlider vSlider7;
+        private VSlider vSlider8;
+        private VSlider vSlider9;
+        private VSlider vSlider10;
+        private VSlider vSlider11;
+        private VSlider vSlider12;
+        private VSlider vSlider13;
+        private VSlider vSlider14;
+        private VSlider vSlider15;
+        private VSlider vSlider16;
+        private VSlider vSlider17;
+        private VSlider vSlider18;
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private Label label4;
+        private Label label5;
+        private Label label6;
+        private Label label7;
+        private Label label8;
+        private Label label9;
+        private Label label10;
+        private Label label11;
+        private Label label12;
+        private Label label13;
+        private Label label14;
+        private Label label15;
+        private Label label16;
+        private Label label17;
+        private Label label18;
+        private SingleButton singleButton_Preset;
+        private SingleButton singleButton_OK;
+        private Label label_dB_Max;
+        private Label label_dB_Min;
+        private Label label_dB_Zero;
+        private CheckBox checkBox_RealtimeAdjust;
+        private bool m_bEQEnabled;
+        private readonly float[] m_faEQBands = new float[18];
+        private readonly List<VSlider> m_ctlEQBandList = new List<VSlider>();
+        private RuntimeUtils.ConfigProxy.ParamOfBaseSystem m_paramBaseSystem;
+        private RuntimeUtils.ConfigProxy.ParamOfMusicMode m_paramMusicMode;
+        private RuntimeUtils.ConfigProxy.ParamOfMovieMode m_paramMovieMode;
+        private RuntimeUtils.ConfigProxy.ParamOfFreestyle m_paramFreestyle;
+        private RuntimeUtils.ConfigProxy m_cpConfigProxy;
 
-    private void InitializeComponent()
-    {
-      ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof (frmEqualizer));
-      this.label_Equalizer_Enable = new Label();
-      this.onOffSwitch_Equalizer = new OnOffSwitch();
-      this.vSlider1 = new VSlider();
-      this.vSlider2 = new VSlider();
-      this.vSlider3 = new VSlider();
-      this.vSlider4 = new VSlider();
-      this.vSlider5 = new VSlider();
-      this.vSlider6 = new VSlider();
-      this.vSlider7 = new VSlider();
-      this.vSlider8 = new VSlider();
-      this.vSlider9 = new VSlider();
-      this.vSlider10 = new VSlider();
-      this.vSlider11 = new VSlider();
-      this.vSlider12 = new VSlider();
-      this.vSlider13 = new VSlider();
-      this.vSlider14 = new VSlider();
-      this.vSlider15 = new VSlider();
-      this.vSlider16 = new VSlider();
-      this.vSlider17 = new VSlider();
-      this.vSlider18 = new VSlider();
-      this.label1 = new Label();
-      this.label2 = new Label();
-      this.label3 = new Label();
-      this.label4 = new Label();
-      this.label5 = new Label();
-      this.label6 = new Label();
-      this.label7 = new Label();
-      this.label8 = new Label();
-      this.label9 = new Label();
-      this.label10 = new Label();
-      this.label11 = new Label();
-      this.label12 = new Label();
-      this.label13 = new Label();
-      this.label14 = new Label();
-      this.label15 = new Label();
-      this.label16 = new Label();
-      this.label17 = new Label();
-      this.label18 = new Label();
-      this.singleButton_Preset = new SingleButton();
-      this.singleButton_OK = new SingleButton();
-      this.label_dB_Max = new Label();
-      this.label_dB_Min = new Label();
-      this.label_dB_Zero = new Label();
-      this.checkBox_RealtimeAdjust = new CheckBox();
-      this.SuspendLayout();
-      this.label_Equalizer_Enable.AutoSize = true;
-      this.label_Equalizer_Enable.Location = new Point(24, 22);
-      this.label_Equalizer_Enable.Name = "label_Equalizer_Enable";
-      this.label_Equalizer_Enable.Size = new Size(47, 12);
-      this.label_Equalizer_Enable.TabIndex = 0;
-      this.label_Equalizer_Enable.Text = "$ENABLE";
-      this.onOffSwitch_Equalizer.BackColor = Color.Transparent;
-      this.onOffSwitch_Equalizer.Location = new Point(24, 37);
-      this.onOffSwitch_Equalizer.Name = "onOffSwitch_Equalizer";
-      this.onOffSwitch_Equalizer.Size = new Size(107, 28);
-      this.onOffSwitch_Equalizer.SwitchedOn = false;
-      this.onOffSwitch_Equalizer.TabIndex = 1;
-      this.vSlider1.BackColor = SystemColors.Control;
-      this.vSlider1.Location = new Point(53, 83);
-      this.vSlider1.MoveDelta = 1U;
-      this.vSlider1.Name = "vSlider1";
-      this.vSlider1.Position = 50U;
-      this.vSlider1.Size = new Size(47, 204);
-      this.vSlider1.TabIndex = 2;
-      this.vSlider2.BackColor = SystemColors.Control;
-      this.vSlider2.Location = new Point(106, 83);
-      this.vSlider2.MoveDelta = 1U;
-      this.vSlider2.Name = "vSlider2";
-      this.vSlider2.Position = 50U;
-      this.vSlider2.Size = new Size(47, 204);
-      this.vSlider2.TabIndex = 3;
-      this.vSlider3.BackColor = SystemColors.Control;
-      this.vSlider3.Location = new Point(159, 83);
-      this.vSlider3.MoveDelta = 1U;
-      this.vSlider3.Name = "vSlider3";
-      this.vSlider3.Position = 50U;
-      this.vSlider3.Size = new Size(47, 204);
-      this.vSlider3.TabIndex = 4;
-      this.vSlider4.BackColor = SystemColors.Control;
-      this.vSlider4.Location = new Point(212, 83);
-      this.vSlider4.MoveDelta = 1U;
-      this.vSlider4.Name = "vSlider4";
-      this.vSlider4.Position = 50U;
-      this.vSlider4.Size = new Size(47, 204);
-      this.vSlider4.TabIndex = 5;
-      this.vSlider5.BackColor = SystemColors.Control;
-      this.vSlider5.Location = new Point(265, 83);
-      this.vSlider5.MoveDelta = 1U;
-      this.vSlider5.Name = "vSlider5";
-      this.vSlider5.Position = 50U;
-      this.vSlider5.Size = new Size(47, 204);
-      this.vSlider5.TabIndex = 6;
-      this.vSlider6.BackColor = SystemColors.Control;
-      this.vSlider6.Location = new Point(318, 83);
-      this.vSlider6.MoveDelta = 1U;
-      this.vSlider6.Name = "vSlider6";
-      this.vSlider6.Position = 50U;
-      this.vSlider6.Size = new Size(47, 204);
-      this.vSlider6.TabIndex = 7;
-      this.vSlider7.BackColor = SystemColors.Control;
-      this.vSlider7.Location = new Point(371, 83);
-      this.vSlider7.MoveDelta = 1U;
-      this.vSlider7.Name = "vSlider7";
-      this.vSlider7.Position = 50U;
-      this.vSlider7.Size = new Size(47, 204);
-      this.vSlider7.TabIndex = 8;
-      this.vSlider8.BackColor = SystemColors.Control;
-      this.vSlider8.Location = new Point(424, 83);
-      this.vSlider8.MoveDelta = 1U;
-      this.vSlider8.Name = "vSlider8";
-      this.vSlider8.Position = 50U;
-      this.vSlider8.Size = new Size(47, 204);
-      this.vSlider8.TabIndex = 9;
-      this.vSlider9.BackColor = SystemColors.Control;
-      this.vSlider9.Location = new Point(477, 83);
-      this.vSlider9.MoveDelta = 1U;
-      this.vSlider9.Name = "vSlider9";
-      this.vSlider9.Position = 50U;
-      this.vSlider9.Size = new Size(47, 204);
-      this.vSlider9.TabIndex = 10;
-      this.vSlider10.BackColor = SystemColors.Control;
-      this.vSlider10.Location = new Point(530, 83);
-      this.vSlider10.MoveDelta = 1U;
-      this.vSlider10.Name = "vSlider10";
-      this.vSlider10.Position = 50U;
-      this.vSlider10.Size = new Size(47, 204);
-      this.vSlider10.TabIndex = 11;
-      this.vSlider11.BackColor = SystemColors.Control;
-      this.vSlider11.Location = new Point(583, 83);
-      this.vSlider11.MoveDelta = 1U;
-      this.vSlider11.Name = "vSlider11";
-      this.vSlider11.Position = 50U;
-      this.vSlider11.Size = new Size(47, 204);
-      this.vSlider11.TabIndex = 12;
-      this.vSlider12.BackColor = SystemColors.Control;
-      this.vSlider12.Location = new Point(636, 83);
-      this.vSlider12.MoveDelta = 1U;
-      this.vSlider12.Name = "vSlider12";
-      this.vSlider12.Position = 50U;
-      this.vSlider12.Size = new Size(47, 204);
-      this.vSlider12.TabIndex = 13;
-      this.vSlider13.BackColor = SystemColors.Control;
-      this.vSlider13.Location = new Point(689, 83);
-      this.vSlider13.MoveDelta = 1U;
-      this.vSlider13.Name = "vSlider13";
-      this.vSlider13.Position = 50U;
-      this.vSlider13.Size = new Size(47, 204);
-      this.vSlider13.TabIndex = 14;
-      this.vSlider14.BackColor = SystemColors.Control;
-      this.vSlider14.Location = new Point(742, 83);
-      this.vSlider14.MoveDelta = 1U;
-      this.vSlider14.Name = "vSlider14";
-      this.vSlider14.Position = 50U;
-      this.vSlider14.Size = new Size(47, 204);
-      this.vSlider14.TabIndex = 15;
-      this.vSlider15.BackColor = SystemColors.Control;
-      this.vSlider15.Location = new Point(795, 83);
-      this.vSlider15.MoveDelta = 1U;
-      this.vSlider15.Name = "vSlider15";
-      this.vSlider15.Position = 50U;
-      this.vSlider15.Size = new Size(47, 204);
-      this.vSlider15.TabIndex = 16;
-      this.vSlider16.BackColor = SystemColors.Control;
-      this.vSlider16.Location = new Point(848, 83);
-      this.vSlider16.MoveDelta = 1U;
-      this.vSlider16.Name = "vSlider16";
-      this.vSlider16.Position = 50U;
-      this.vSlider16.Size = new Size(47, 204);
-      this.vSlider16.TabIndex = 17;
-      this.vSlider17.BackColor = SystemColors.Control;
-      this.vSlider17.Location = new Point(901, 83);
-      this.vSlider17.MoveDelta = 1U;
-      this.vSlider17.Name = "vSlider17";
-      this.vSlider17.Position = 50U;
-      this.vSlider17.Size = new Size(47, 204);
-      this.vSlider17.TabIndex = 18;
-      this.vSlider18.BackColor = SystemColors.Control;
-      this.vSlider18.Location = new Point(954, 83);
-      this.vSlider18.MoveDelta = 1U;
-      this.vSlider18.Name = "vSlider18";
-      this.vSlider18.Position = 50U;
-      this.vSlider18.Size = new Size(47, 204);
-      this.vSlider18.TabIndex = 19;
-      this.label1.AutoSize = true;
-      this.label1.Location = new Point(69, 290);
-      this.label1.Name = "label1";
-      this.label1.Size = new Size(17, 12);
-      this.label1.TabIndex = 20;
-      this.label1.Text = "65";
-      this.label2.AutoSize = true;
-      this.label2.Location = new Point(121, 290);
-      this.label2.Name = "label2";
-      this.label2.Size = new Size(17, 12);
-      this.label2.TabIndex = 21;
-      this.label2.Text = "93";
-      this.label3.AutoSize = true;
-      this.label3.Location = new Point(173, 290);
-      this.label3.Name = "label3";
-      this.label3.Size = new Size(23, 12);
-      this.label3.TabIndex = 22;
-      this.label3.Text = "131";
-      this.label4.AutoSize = true;
-      this.label4.Location = new Point(225, 290);
-      this.label4.Name = "label4";
-      this.label4.Size = new Size(23, 12);
-      this.label4.TabIndex = 23;
-      this.label4.Text = "185";
-      this.label5.AutoSize = true;
-      this.label5.Location = new Point(279, 290);
-      this.label5.Name = "label5";
-      this.label5.Size = new Size(23, 12);
-      this.label5.TabIndex = 24;
-      this.label5.Text = "262";
-      this.label6.AutoSize = true;
-      this.label6.Location = new Point(332, 290);
-      this.label6.Name = "label6";
-      this.label6.Size = new Size(23, 12);
-      this.label6.TabIndex = 25;
-      this.label6.Text = "370";
-      this.label7.AutoSize = true;
-      this.label7.Location = new Point(384, 290);
-      this.label7.Name = "label7";
-      this.label7.Size = new Size(23, 12);
-      this.label7.TabIndex = 26;
-      this.label7.Text = "523";
-      this.label8.AutoSize = true;
-      this.label8.Location = new Point(437, 290);
-      this.label8.Name = "label8";
-      this.label8.Size = new Size(23, 12);
-      this.label8.TabIndex = 27;
-      this.label8.Text = "740";
-      this.label9.AutoSize = true;
-      this.label9.Location = new Point(487, 290);
-      this.label9.Name = "label9";
-      this.label9.Size = new Size(29, 12);
-      this.label9.TabIndex = 28;
-      this.label9.Text = "1.0k";
-      this.label10.AutoSize = true;
-      this.label10.Location = new Point(540, 290);
-      this.label10.Name = "label10";
-      this.label10.Size = new Size(29, 12);
-      this.label10.TabIndex = 29;
-      this.label10.Text = "1.5k";
-      this.label11.AutoSize = true;
-      this.label11.Location = new Point(593, 290);
-      this.label11.Name = "label11";
-      this.label11.Size = new Size(29, 12);
-      this.label11.TabIndex = 30;
-      this.label11.Text = "2.1k";
-      this.label12.AutoSize = true;
-      this.label12.Location = new Point(646, 290);
-      this.label12.Name = "label12";
-      this.label12.Size = new Size(29, 12);
-      this.label12.TabIndex = 31;
-      this.label12.Text = "3.0k";
-      this.label13.AutoSize = true;
-      this.label13.Location = new Point(699, 290);
-      this.label13.Name = "label13";
-      this.label13.Size = new Size(29, 12);
-      this.label13.TabIndex = 32;
-      this.label13.Text = "4.2k";
-      this.label14.AutoSize = true;
-      this.label14.Location = new Point(752, 290);
-      this.label14.Name = "label14";
-      this.label14.Size = new Size(29, 12);
-      this.label14.TabIndex = 33;
-      this.label14.Text = "6.0k";
-      this.label15.AutoSize = true;
-      this.label15.Location = new Point(806, 290);
-      this.label15.Name = "label15";
-      this.label15.Size = new Size(29, 12);
-      this.label15.TabIndex = 34;
-      this.label15.Text = "8.4k";
-      this.label16.AutoSize = true;
-      this.label16.Location = new Point(857, 290);
-      this.label16.Name = "label16";
-      this.label16.Size = new Size(35, 12);
-      this.label16.TabIndex = 35;
-      this.label16.Text = "11.8k";
-      this.label17.AutoSize = true;
-      this.label17.Location = new Point(910, 290);
-      this.label17.Name = "label17";
-      this.label17.Size = new Size(35, 12);
-      this.label17.TabIndex = 36;
-      this.label17.Text = "16.7k";
-      this.label18.AutoSize = true;
-      this.label18.Location = new Point(967, 290);
-      this.label18.Name = "label18";
-      this.label18.Size = new Size(23, 12);
-      this.label18.TabIndex = 37;
-      this.label18.Text = "20k";
-      this.singleButton_Preset.BackColor = SystemColors.Control;
-      this.singleButton_Preset.ButtonText = "$PRESET";
-      this.singleButton_Preset.Location = new Point(171, 25);
-      this.singleButton_Preset.Name = "singleButton_Preset";
-      this.singleButton_Preset.Size = new Size(143, 40);
-      this.singleButton_Preset.TabIndex = 38;
-      this.singleButton_Preset.ButtonClickNotify += new SingleButton.ButtonClickEventDelegate(this.singleButton_Preset_ButtonClickNotify);
-      this.singleButton_OK.BackColor = SystemColors.Control;
-      this.singleButton_OK.ButtonText = "$OK";
-      this.singleButton_OK.Location = new Point(878, 25);
-      this.singleButton_OK.Name = "singleButton_OK";
-      this.singleButton_OK.Size = new Size(112, 40);
-      this.singleButton_OK.TabIndex = 40;
-      this.singleButton_OK.ButtonClickNotify += new SingleButton.ButtonClickEventDelegate(this.singleButton_OK_ButtonClickNotify);
-      this.label_dB_Max.AutoSize = true;
-      this.label_dB_Max.Location = new Point(12, 101);
-      this.label_dB_Max.Name = "label_dB_Max";
-      this.label_dB_Max.Size = new Size(29, 12);
-      this.label_dB_Max.TabIndex = 41;
-      this.label_dB_Max.Text = "13dB";
-      this.label_dB_Min.AutoSize = true;
-      this.label_dB_Min.Location = new Point(12, 256);
-      this.label_dB_Min.Name = "label_dB_Min";
-      this.label_dB_Min.Size = new Size(41, 12);
-      this.label_dB_Min.TabIndex = 42;
-      this.label_dB_Min.Text = "-120dB";
-      this.label_dB_Zero.AutoSize = true;
-      this.label_dB_Zero.Location = new Point(12, 179);
-      this.label_dB_Zero.Name = "label_dB_Zero";
-      this.label_dB_Zero.Size = new Size(23, 12);
-      this.label_dB_Zero.TabIndex = 43;
-      this.label_dB_Zero.Text = "0dB";
-      this.checkBox_RealtimeAdjust.AutoSize = true;
-      this.checkBox_RealtimeAdjust.Location = new Point(386, 37);
-      this.checkBox_RealtimeAdjust.Name = "checkBox_RealtimeAdjust";
-      this.checkBox_RealtimeAdjust.Size = new Size(180, 16);
-      this.checkBox_RealtimeAdjust.TabIndex = 44;
-      this.checkBox_RealtimeAdjust.Text = "$EQUALIZER_REALTIME_ADJUST";
-      this.checkBox_RealtimeAdjust.UseVisualStyleBackColor = true;
-      this.checkBox_RealtimeAdjust.CheckedChanged += new EventHandler(this.checkBox_RealtimeAdjust_CheckedChanged);
-      this.AutoScaleDimensions = new SizeF(6f, 12f);
-      this.AutoScaleMode = AutoScaleMode.Font;
-      this.ClientSize = new Size(1013, 324);
-      this.Controls.Add((Control) this.checkBox_RealtimeAdjust);
-      this.Controls.Add((Control) this.label_dB_Zero);
-      this.Controls.Add((Control) this.label_dB_Min);
-      this.Controls.Add((Control) this.label_dB_Max);
-      this.Controls.Add((Control) this.singleButton_OK);
-      this.Controls.Add((Control) this.singleButton_Preset);
-      this.Controls.Add((Control) this.label18);
-      this.Controls.Add((Control) this.label17);
-      this.Controls.Add((Control) this.label16);
-      this.Controls.Add((Control) this.label15);
-      this.Controls.Add((Control) this.label14);
-      this.Controls.Add((Control) this.label13);
-      this.Controls.Add((Control) this.label12);
-      this.Controls.Add((Control) this.label11);
-      this.Controls.Add((Control) this.label10);
-      this.Controls.Add((Control) this.label9);
-      this.Controls.Add((Control) this.label8);
-      this.Controls.Add((Control) this.label7);
-      this.Controls.Add((Control) this.label6);
-      this.Controls.Add((Control) this.label5);
-      this.Controls.Add((Control) this.label4);
-      this.Controls.Add((Control) this.label3);
-      this.Controls.Add((Control) this.label2);
-      this.Controls.Add((Control) this.label1);
-      this.Controls.Add((Control) this.vSlider18);
-      this.Controls.Add((Control) this.vSlider17);
-      this.Controls.Add((Control) this.vSlider16);
-      this.Controls.Add((Control) this.vSlider15);
-      this.Controls.Add((Control) this.vSlider14);
-      this.Controls.Add((Control) this.vSlider13);
-      this.Controls.Add((Control) this.vSlider12);
-      this.Controls.Add((Control) this.vSlider11);
-      this.Controls.Add((Control) this.vSlider10);
-      this.Controls.Add((Control) this.vSlider9);
-      this.Controls.Add((Control) this.vSlider8);
-      this.Controls.Add((Control) this.vSlider7);
-      this.Controls.Add((Control) this.vSlider6);
-      this.Controls.Add((Control) this.vSlider5);
-      this.Controls.Add((Control) this.vSlider4);
-      this.Controls.Add((Control) this.vSlider3);
-      this.Controls.Add((Control) this.vSlider2);
-      this.Controls.Add((Control) this.vSlider1);
-      this.Controls.Add((Control) this.onOffSwitch_Equalizer);
-      this.Controls.Add((Control) this.label_Equalizer_Enable);
-      this.DoubleBuffered = true;
-      this.FormBorderStyle = FormBorderStyle.FixedSingle;
-      this.Icon = (Icon) componentResourceManager.GetObject("$this.Icon");
-      this.MaximizeBox = false;
-      this.Name = nameof (frmEqualizer);
-      this.StartPosition = FormStartPosition.CenterScreen;
-      this.Text = "$EQUALIZER";
-      this.ResumeLayout(false);
-      this.PerformLayout();
-    }
-
-    public void SetRealtimeParameters(
-      RuntimeUtils.ConfigProxy._ParamOfBaseSystem paramBaseSystem,
-      RuntimeUtils.ConfigProxy._ParamOfMusicMode paramMusicMode,
-      RuntimeUtils.ConfigProxy._ParamOfMovieMode paramMovieMode,
-      RuntimeUtils.ConfigProxy._ParamOfFreestyle paramFreestyle,
-      RuntimeUtils.ConfigProxy cpConfigProxy)
-    {
-      this.m_paramBaseSystem = paramBaseSystem;
-      this.m_paramMusicMode = paramMusicMode;
-      this.m_paramMovieMode = paramMovieMode;
-      this.m_paramFreestyle = paramFreestyle;
-      this.m_cpConfigProxy = cpConfigProxy;
-    }
-
-    public frmEqualizer()
-    {
-      this.InitializeComponent();
-      this.Text = GlobalMessages.EQUALIZER;
-      this.label_Equalizer_Enable.Text = GlobalMessages.ENABLE;
-      this.checkBox_RealtimeAdjust.Text = GlobalMessages.EQUALIZER_REALTIME_ADJUST;
-      this.singleButton_Preset.ButtonText = GlobalMessages.PRESET;
-      this.singleButton_OK.ButtonText = GlobalMessages.OK;
-      this.m_ctlEQBandList.Add(this.vSlider1);
-      this.m_ctlEQBandList.Add(this.vSlider2);
-      this.m_ctlEQBandList.Add(this.vSlider3);
-      this.m_ctlEQBandList.Add(this.vSlider4);
-      this.m_ctlEQBandList.Add(this.vSlider5);
-      this.m_ctlEQBandList.Add(this.vSlider6);
-      this.m_ctlEQBandList.Add(this.vSlider7);
-      this.m_ctlEQBandList.Add(this.vSlider8);
-      this.m_ctlEQBandList.Add(this.vSlider9);
-      this.m_ctlEQBandList.Add(this.vSlider10);
-      this.m_ctlEQBandList.Add(this.vSlider11);
-      this.m_ctlEQBandList.Add(this.vSlider12);
-      this.m_ctlEQBandList.Add(this.vSlider13);
-      this.m_ctlEQBandList.Add(this.vSlider14);
-      this.m_ctlEQBandList.Add(this.vSlider15);
-      this.m_ctlEQBandList.Add(this.vSlider16);
-      this.m_ctlEQBandList.Add(this.vSlider17);
-      this.m_ctlEQBandList.Add(this.vSlider18);
-      for (int index = 0; index < this.m_ctlEQBandList.Count; ++index)
-        this.m_ctlEQBandList[index].Tag = (object) index.ToString();
-      for (int index = 0; index < this.m_faEQBands.Length; ++index)
-        this.m_faEQBands[index] = 1f;
-      this.m_bEQEnabled = false;
-      this.UpdateUI();
-      foreach (VSlider ctlEqBand in this.m_ctlEQBandList)
-        ctlEqBand.PositionChangeNotify += new VSlider.PositionChangeEventDelegate(this.EQBandChanged);
-      this.onOffSwitch_Equalizer.SwitchChangeNotify += new OnOffSwitch.SwitchChangeEventDelegate(this.EQSwitchChange);
-    }
-
-    private void UpdateUI()
-    {
-      this.onOffSwitch_Equalizer.SwitchedOn = this.m_bEQEnabled;
-      for (int index = 0; index < this.m_faEQBands.Length; ++index)
-      {
-        float faEqBand = this.m_faEQBands[index];
-        uint num = (uint) (((double) faEqBand > 1.0 ? (double) ((faEqBand - 1f) / 4f * 0.5f + 0.5f) : (double) (faEqBand * 0.5f)) * 100.0);
-        if (num > 100U)
-          num = 100U;
-        this.m_ctlEQBandList[index].Position = num;
-      }
-    }
-
-    private void EQBandChanged(float fPercent, VSlider objSender)
-    {
-      if (objSender == null || objSender.Tag == null || !(objSender.Tag is string tag))
-        return;
-      int result = -1;
-      if (!int.TryParse(tag, out result) || result < 0 || result >= this.m_faEQBands.Length)
-        return;
-      float num = (double) fPercent >= 0.5 ? (float) (((double) fPercent - 0.5) / 0.5 * 4.0 + 1.0) : fPercent / 0.5f;
-      this.m_faEQBands[result] = num;
-      if (!this.checkBox_RealtimeAdjust.Checked)
-        return;
-      if (this.m_paramBaseSystem.m_nEffectMode == 0U)
-      {
-        this.m_paramMusicMode.m_rpEqualizerBands[result] = num;
-        this.m_cpConfigProxy.UpdateParameter(this.m_paramMusicMode);
-        this.m_cpConfigProxy.SyncConfig();
-      }
-      if (this.m_paramBaseSystem.m_nEffectMode == 1U)
-      {
-        this.m_paramMovieMode.m_rpEqualizerBands[result] = num;
-        this.m_cpConfigProxy.UpdateParameter(this.m_paramMovieMode);
-        this.m_cpConfigProxy.SyncConfig();
-      }
-      if (this.m_paramBaseSystem.m_nEffectMode != 2U)
-        return;
-      this.m_paramFreestyle.m_rpEqualizerBands[result] = num;
-      this.m_cpConfigProxy.UpdateParameter(this.m_paramFreestyle);
-      this.m_cpConfigProxy.SyncConfig();
-    }
-
-    private void EQSwitchChange(bool bSwitchedOn, OnOffSwitch objSender)
-    {
-      this.m_bEQEnabled = bSwitchedOn;
-      if (!this.checkBox_RealtimeAdjust.Checked)
-        return;
-      if (this.m_paramBaseSystem.m_nEffectMode == 0U)
-      {
-        this.m_paramMusicMode.m_bEqualizerEnabled = !this.m_bEQEnabled ? 0 : 1;
-        this.m_cpConfigProxy.UpdateParameter(this.m_paramMusicMode);
-        this.m_cpConfigProxy.SyncConfig();
-      }
-      if (this.m_paramBaseSystem.m_nEffectMode == 1U)
-      {
-        this.m_paramMovieMode.m_bEqualizerEnabled = !this.m_bEQEnabled ? 0 : 1;
-        this.m_cpConfigProxy.UpdateParameter(this.m_paramMovieMode);
-        this.m_cpConfigProxy.SyncConfig();
-      }
-      if (this.m_paramBaseSystem.m_nEffectMode != 2U)
-        return;
-      this.m_paramFreestyle.m_bEqualizerEnabled = !this.m_bEQEnabled ? 0 : 1;
-      this.m_cpConfigProxy.UpdateParameter(this.m_paramFreestyle);
-      this.m_cpConfigProxy.SyncConfig();
-    }
-
-    public void SetParameters(float[] faEQBands, bool bEQEnabled)
-    {
-      if (faEQBands == null || faEQBands.Length != this.m_faEQBands.Length)
-        return;
-      Array.Copy((Array) faEQBands, (Array) this.m_faEQBands, this.m_faEQBands.Length);
-      this.m_bEQEnabled = bEQEnabled;
-      this.UpdateUI();
-    }
-
-    public float[] GetParameter() => this.m_faEQBands;
-
-    public bool GetEQEnabled() => this.m_bEQEnabled;
-
-    private void singleButton_OK_ButtonClickNotify(SingleButton objSender) => this.DialogResult = DialogResult.OK;
-
-    private void singleButton_Preset_ButtonClickNotify(SingleButton objSender)
-    {
-      frmEQPreset frmEqPreset = new frmEQPreset();
-      frmEqPreset.SetPreset(this.m_faEQBands);
-      if (frmEqPreset.ShowDialog() == DialogResult.Cancel)
-        return;
-      float[] preset = frmEqPreset.GetPreset();
-      if (preset == null || preset.Length != this.m_faEQBands.Length)
-        return;
-      Array.Copy((Array) preset, (Array) this.m_faEQBands, this.m_faEQBands.Length);
-      if (this.checkBox_RealtimeAdjust.Checked)
-      {
-        if (this.m_paramBaseSystem.m_nEffectMode == 0U)
+        protected override void Dispose(bool disposing)
         {
-          Array.Copy((Array) this.m_faEQBands, (Array) this.m_paramMusicMode.m_rpEqualizerBands, this.m_faEQBands.Length);
-          this.m_cpConfigProxy.UpdateParameter(this.m_paramMusicMode);
-          this.m_cpConfigProxy.SyncConfig();
+            if (disposing && components != null)
+                components.Dispose();
+            base.Dispose(disposing);
         }
-        if (this.m_paramBaseSystem.m_nEffectMode == 1U)
-        {
-          Array.Copy((Array) this.m_faEQBands, (Array) this.m_paramMovieMode.m_rpEqualizerBands, this.m_faEQBands.Length);
-          this.m_cpConfigProxy.UpdateParameter(this.m_paramMovieMode);
-          this.m_cpConfigProxy.SyncConfig();
-        }
-        if (this.m_paramBaseSystem.m_nEffectMode == 2U)
-        {
-          Array.Copy((Array) this.m_faEQBands, (Array) this.m_paramFreestyle.m_rpEqualizerBands, this.m_faEQBands.Length);
-          this.m_cpConfigProxy.UpdateParameter(this.m_paramFreestyle);
-          this.m_cpConfigProxy.SyncConfig();
-        }
-      }
-      this.UpdateUI();
-    }
 
-    private void checkBox_RealtimeAdjust_CheckedChanged(object sender, EventArgs e)
-    {
-      if (!this.checkBox_RealtimeAdjust.Checked)
-        return;
-      if (this.m_paramBaseSystem.m_nEffectMode == 0U)
-      {
-        this.m_paramMusicMode.m_bEqualizerEnabled = !this.m_bEQEnabled ? 0 : 1;
-        Array.Copy((Array) this.m_faEQBands, (Array) this.m_paramMusicMode.m_rpEqualizerBands, this.m_faEQBands.Length);
-        this.m_cpConfigProxy.UpdateParameter(this.m_paramMusicMode);
-        this.m_cpConfigProxy.SyncConfig();
-      }
-      if (this.m_paramBaseSystem.m_nEffectMode == 1U)
-      {
-        this.m_paramMovieMode.m_bEqualizerEnabled = !this.m_bEQEnabled ? 0 : 1;
-        Array.Copy((Array) this.m_faEQBands, (Array) this.m_paramMovieMode.m_rpEqualizerBands, this.m_faEQBands.Length);
-        this.m_cpConfigProxy.UpdateParameter(this.m_paramMovieMode);
-        this.m_cpConfigProxy.SyncConfig();
-      }
-      if (this.m_paramBaseSystem.m_nEffectMode != 2U)
-        return;
-      this.m_paramFreestyle.m_bEqualizerEnabled = !this.m_bEQEnabled ? 0 : 1;
-      Array.Copy((Array) this.m_faEQBands, (Array) this.m_paramFreestyle.m_rpEqualizerBands, this.m_faEQBands.Length);
-      this.m_cpConfigProxy.UpdateParameter(this.m_paramFreestyle);
-      this.m_cpConfigProxy.SyncConfig();
+        private void InitializeComponent()
+        {
+            ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(FrmEqualizer));
+            label_Equalizer_Enable = new Label();
+            onOffSwitch_Equalizer = new OnOffSwitch();
+            vSlider1 = new VSlider();
+            vSlider2 = new VSlider();
+            vSlider3 = new VSlider();
+            vSlider4 = new VSlider();
+            vSlider5 = new VSlider();
+            vSlider6 = new VSlider();
+            vSlider7 = new VSlider();
+            vSlider8 = new VSlider();
+            vSlider9 = new VSlider();
+            vSlider10 = new VSlider();
+            vSlider11 = new VSlider();
+            vSlider12 = new VSlider();
+            vSlider13 = new VSlider();
+            vSlider14 = new VSlider();
+            vSlider15 = new VSlider();
+            vSlider16 = new VSlider();
+            vSlider17 = new VSlider();
+            vSlider18 = new VSlider();
+            label1 = new Label();
+            label2 = new Label();
+            label3 = new Label();
+            label4 = new Label();
+            label5 = new Label();
+            label6 = new Label();
+            label7 = new Label();
+            label8 = new Label();
+            label9 = new Label();
+            label10 = new Label();
+            label11 = new Label();
+            label12 = new Label();
+            label13 = new Label();
+            label14 = new Label();
+            label15 = new Label();
+            label16 = new Label();
+            label17 = new Label();
+            label18 = new Label();
+            singleButton_Preset = new SingleButton();
+            singleButton_OK = new SingleButton();
+            label_dB_Max = new Label();
+            label_dB_Min = new Label();
+            label_dB_Zero = new Label();
+            checkBox_RealtimeAdjust = new CheckBox();
+            SuspendLayout();
+            label_Equalizer_Enable.AutoSize = true;
+            label_Equalizer_Enable.Location = new Point(24, 22);
+            label_Equalizer_Enable.Name = "label_Equalizer_Enable";
+            label_Equalizer_Enable.Size = new Size(47, 12);
+            label_Equalizer_Enable.TabIndex = 0;
+            label_Equalizer_Enable.Text = "$ENABLE";
+            onOffSwitch_Equalizer.BackColor = Color.Transparent;
+            onOffSwitch_Equalizer.Location = new Point(24, 37);
+            onOffSwitch_Equalizer.Name = "onOffSwitch_Equalizer";
+            onOffSwitch_Equalizer.Size = new Size(107, 28);
+            onOffSwitch_Equalizer.SwitchedOn = false;
+            onOffSwitch_Equalizer.TabIndex = 1;
+            vSlider1.BackColor = SystemColors.Control;
+            vSlider1.Location = new Point(53, 83);
+            vSlider1.MoveDelta = 1U;
+            vSlider1.Name = "vSlider1";
+            vSlider1.Position = 50U;
+            vSlider1.Size = new Size(47, 204);
+            vSlider1.TabIndex = 2;
+            vSlider2.BackColor = SystemColors.Control;
+            vSlider2.Location = new Point(106, 83);
+            vSlider2.MoveDelta = 1U;
+            vSlider2.Name = "vSlider2";
+            vSlider2.Position = 50U;
+            vSlider2.Size = new Size(47, 204);
+            vSlider2.TabIndex = 3;
+            vSlider3.BackColor = SystemColors.Control;
+            vSlider3.Location = new Point(159, 83);
+            vSlider3.MoveDelta = 1U;
+            vSlider3.Name = "vSlider3";
+            vSlider3.Position = 50U;
+            vSlider3.Size = new Size(47, 204);
+            vSlider3.TabIndex = 4;
+            vSlider4.BackColor = SystemColors.Control;
+            vSlider4.Location = new Point(212, 83);
+            vSlider4.MoveDelta = 1U;
+            vSlider4.Name = "vSlider4";
+            vSlider4.Position = 50U;
+            vSlider4.Size = new Size(47, 204);
+            vSlider4.TabIndex = 5;
+            vSlider5.BackColor = SystemColors.Control;
+            vSlider5.Location = new Point(265, 83);
+            vSlider5.MoveDelta = 1U;
+            vSlider5.Name = "vSlider5";
+            vSlider5.Position = 50U;
+            vSlider5.Size = new Size(47, 204);
+            vSlider5.TabIndex = 6;
+            vSlider6.BackColor = SystemColors.Control;
+            vSlider6.Location = new Point(318, 83);
+            vSlider6.MoveDelta = 1U;
+            vSlider6.Name = "vSlider6";
+            vSlider6.Position = 50U;
+            vSlider6.Size = new Size(47, 204);
+            vSlider6.TabIndex = 7;
+            vSlider7.BackColor = SystemColors.Control;
+            vSlider7.Location = new Point(371, 83);
+            vSlider7.MoveDelta = 1U;
+            vSlider7.Name = "vSlider7";
+            vSlider7.Position = 50U;
+            vSlider7.Size = new Size(47, 204);
+            vSlider7.TabIndex = 8;
+            vSlider8.BackColor = SystemColors.Control;
+            vSlider8.Location = new Point(424, 83);
+            vSlider8.MoveDelta = 1U;
+            vSlider8.Name = "vSlider8";
+            vSlider8.Position = 50U;
+            vSlider8.Size = new Size(47, 204);
+            vSlider8.TabIndex = 9;
+            vSlider9.BackColor = SystemColors.Control;
+            vSlider9.Location = new Point(477, 83);
+            vSlider9.MoveDelta = 1U;
+            vSlider9.Name = "vSlider9";
+            vSlider9.Position = 50U;
+            vSlider9.Size = new Size(47, 204);
+            vSlider9.TabIndex = 10;
+            vSlider10.BackColor = SystemColors.Control;
+            vSlider10.Location = new Point(530, 83);
+            vSlider10.MoveDelta = 1U;
+            vSlider10.Name = "vSlider10";
+            vSlider10.Position = 50U;
+            vSlider10.Size = new Size(47, 204);
+            vSlider10.TabIndex = 11;
+            vSlider11.BackColor = SystemColors.Control;
+            vSlider11.Location = new Point(583, 83);
+            vSlider11.MoveDelta = 1U;
+            vSlider11.Name = "vSlider11";
+            vSlider11.Position = 50U;
+            vSlider11.Size = new Size(47, 204);
+            vSlider11.TabIndex = 12;
+            vSlider12.BackColor = SystemColors.Control;
+            vSlider12.Location = new Point(636, 83);
+            vSlider12.MoveDelta = 1U;
+            vSlider12.Name = "vSlider12";
+            vSlider12.Position = 50U;
+            vSlider12.Size = new Size(47, 204);
+            vSlider12.TabIndex = 13;
+            vSlider13.BackColor = SystemColors.Control;
+            vSlider13.Location = new Point(689, 83);
+            vSlider13.MoveDelta = 1U;
+            vSlider13.Name = "vSlider13";
+            vSlider13.Position = 50U;
+            vSlider13.Size = new Size(47, 204);
+            vSlider13.TabIndex = 14;
+            vSlider14.BackColor = SystemColors.Control;
+            vSlider14.Location = new Point(742, 83);
+            vSlider14.MoveDelta = 1U;
+            vSlider14.Name = "vSlider14";
+            vSlider14.Position = 50U;
+            vSlider14.Size = new Size(47, 204);
+            vSlider14.TabIndex = 15;
+            vSlider15.BackColor = SystemColors.Control;
+            vSlider15.Location = new Point(795, 83);
+            vSlider15.MoveDelta = 1U;
+            vSlider15.Name = "vSlider15";
+            vSlider15.Position = 50U;
+            vSlider15.Size = new Size(47, 204);
+            vSlider15.TabIndex = 16;
+            vSlider16.BackColor = SystemColors.Control;
+            vSlider16.Location = new Point(848, 83);
+            vSlider16.MoveDelta = 1U;
+            vSlider16.Name = "vSlider16";
+            vSlider16.Position = 50U;
+            vSlider16.Size = new Size(47, 204);
+            vSlider16.TabIndex = 17;
+            vSlider17.BackColor = SystemColors.Control;
+            vSlider17.Location = new Point(901, 83);
+            vSlider17.MoveDelta = 1U;
+            vSlider17.Name = "vSlider17";
+            vSlider17.Position = 50U;
+            vSlider17.Size = new Size(47, 204);
+            vSlider17.TabIndex = 18;
+            vSlider18.BackColor = SystemColors.Control;
+            vSlider18.Location = new Point(954, 83);
+            vSlider18.MoveDelta = 1U;
+            vSlider18.Name = "vSlider18";
+            vSlider18.Position = 50U;
+            vSlider18.Size = new Size(47, 204);
+            vSlider18.TabIndex = 19;
+            label1.AutoSize = true;
+            label1.Location = new Point(69, 290);
+            label1.Name = "label1";
+            label1.Size = new Size(17, 12);
+            label1.TabIndex = 20;
+            label1.Text = "65";
+            label2.AutoSize = true;
+            label2.Location = new Point(121, 290);
+            label2.Name = "label2";
+            label2.Size = new Size(17, 12);
+            label2.TabIndex = 21;
+            label2.Text = "93";
+            label3.AutoSize = true;
+            label3.Location = new Point(173, 290);
+            label3.Name = "label3";
+            label3.Size = new Size(23, 12);
+            label3.TabIndex = 22;
+            label3.Text = "131";
+            label4.AutoSize = true;
+            label4.Location = new Point(225, 290);
+            label4.Name = "label4";
+            label4.Size = new Size(23, 12);
+            label4.TabIndex = 23;
+            label4.Text = "185";
+            label5.AutoSize = true;
+            label5.Location = new Point(279, 290);
+            label5.Name = "label5";
+            label5.Size = new Size(23, 12);
+            label5.TabIndex = 24;
+            label5.Text = "262";
+            label6.AutoSize = true;
+            label6.Location = new Point(332, 290);
+            label6.Name = "label6";
+            label6.Size = new Size(23, 12);
+            label6.TabIndex = 25;
+            label6.Text = "370";
+            label7.AutoSize = true;
+            label7.Location = new Point(384, 290);
+            label7.Name = "label7";
+            label7.Size = new Size(23, 12);
+            label7.TabIndex = 26;
+            label7.Text = "523";
+            label8.AutoSize = true;
+            label8.Location = new Point(437, 290);
+            label8.Name = "label8";
+            label8.Size = new Size(23, 12);
+            label8.TabIndex = 27;
+            label8.Text = "740";
+            label9.AutoSize = true;
+            label9.Location = new Point(487, 290);
+            label9.Name = "label9";
+            label9.Size = new Size(29, 12);
+            label9.TabIndex = 28;
+            label9.Text = "1.0k";
+            label10.AutoSize = true;
+            label10.Location = new Point(540, 290);
+            label10.Name = "label10";
+            label10.Size = new Size(29, 12);
+            label10.TabIndex = 29;
+            label10.Text = "1.5k";
+            label11.AutoSize = true;
+            label11.Location = new Point(593, 290);
+            label11.Name = "label11";
+            label11.Size = new Size(29, 12);
+            label11.TabIndex = 30;
+            label11.Text = "2.1k";
+            label12.AutoSize = true;
+            label12.Location = new Point(646, 290);
+            label12.Name = "label12";
+            label12.Size = new Size(29, 12);
+            label12.TabIndex = 31;
+            label12.Text = "3.0k";
+            label13.AutoSize = true;
+            label13.Location = new Point(699, 290);
+            label13.Name = "label13";
+            label13.Size = new Size(29, 12);
+            label13.TabIndex = 32;
+            label13.Text = "4.2k";
+            label14.AutoSize = true;
+            label14.Location = new Point(752, 290);
+            label14.Name = "label14";
+            label14.Size = new Size(29, 12);
+            label14.TabIndex = 33;
+            label14.Text = "6.0k";
+            label15.AutoSize = true;
+            label15.Location = new Point(806, 290);
+            label15.Name = "label15";
+            label15.Size = new Size(29, 12);
+            label15.TabIndex = 34;
+            label15.Text = "8.4k";
+            label16.AutoSize = true;
+            label16.Location = new Point(857, 290);
+            label16.Name = "label16";
+            label16.Size = new Size(35, 12);
+            label16.TabIndex = 35;
+            label16.Text = "11.8k";
+            label17.AutoSize = true;
+            label17.Location = new Point(910, 290);
+            label17.Name = "label17";
+            label17.Size = new Size(35, 12);
+            label17.TabIndex = 36;
+            label17.Text = "16.7k";
+            label18.AutoSize = true;
+            label18.Location = new Point(967, 290);
+            label18.Name = "label18";
+            label18.Size = new Size(23, 12);
+            label18.TabIndex = 37;
+            label18.Text = "20k";
+            singleButton_Preset.BackColor = SystemColors.Control;
+            singleButton_Preset.ButtonText = "$PRESET";
+            singleButton_Preset.Location = new Point(171, 25);
+            singleButton_Preset.Name = "singleButton_Preset";
+            singleButton_Preset.Size = new Size(143, 40);
+            singleButton_Preset.TabIndex = 38;
+            singleButton_Preset.ButtonClickNotify += new SingleButton.ButtonClickEventDelegate(SingleButton_Preset_ButtonClickNotify);
+            singleButton_OK.BackColor = SystemColors.Control;
+            singleButton_OK.ButtonText = "$OK";
+            singleButton_OK.Location = new Point(878, 25);
+            singleButton_OK.Name = "singleButton_OK";
+            singleButton_OK.Size = new Size(112, 40);
+            singleButton_OK.TabIndex = 40;
+            singleButton_OK.ButtonClickNotify += new SingleButton.ButtonClickEventDelegate(SingleButton_OK_ButtonClickNotify);
+            label_dB_Max.AutoSize = true;
+            label_dB_Max.Location = new Point(12, 101);
+            label_dB_Max.Name = "label_dB_Max";
+            label_dB_Max.Size = new Size(29, 12);
+            label_dB_Max.TabIndex = 41;
+            label_dB_Max.Text = "13dB";
+            label_dB_Min.AutoSize = true;
+            label_dB_Min.Location = new Point(12, 256);
+            label_dB_Min.Name = "label_dB_Min";
+            label_dB_Min.Size = new Size(41, 12);
+            label_dB_Min.TabIndex = 42;
+            label_dB_Min.Text = "-120dB";
+            label_dB_Zero.AutoSize = true;
+            label_dB_Zero.Location = new Point(12, 179);
+            label_dB_Zero.Name = "label_dB_Zero";
+            label_dB_Zero.Size = new Size(23, 12);
+            label_dB_Zero.TabIndex = 43;
+            label_dB_Zero.Text = "0dB";
+            checkBox_RealtimeAdjust.AutoSize = true;
+            checkBox_RealtimeAdjust.Location = new Point(386, 37);
+            checkBox_RealtimeAdjust.Name = "checkBox_RealtimeAdjust";
+            checkBox_RealtimeAdjust.Size = new Size(180, 16);
+            checkBox_RealtimeAdjust.TabIndex = 44;
+            checkBox_RealtimeAdjust.Text = "$EQUALIZER_REALTIME_ADJUST";
+            checkBox_RealtimeAdjust.UseVisualStyleBackColor = true;
+            checkBox_RealtimeAdjust.CheckedChanged += new EventHandler(CheckBox_RealtimeAdjust_CheckedChanged);
+            AutoScaleDimensions = new SizeF(6f, 12f);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1013, 324);
+            Controls.Add(checkBox_RealtimeAdjust);
+            Controls.Add(label_dB_Zero);
+            Controls.Add(label_dB_Min);
+            Controls.Add(label_dB_Max);
+            Controls.Add(singleButton_OK);
+            Controls.Add(singleButton_Preset);
+            Controls.Add(label18);
+            Controls.Add(label17);
+            Controls.Add(label16);
+            Controls.Add(label15);
+            Controls.Add(label14);
+            Controls.Add(label13);
+            Controls.Add(label12);
+            Controls.Add(label11);
+            Controls.Add(label10);
+            Controls.Add(label9);
+            Controls.Add(label8);
+            Controls.Add(label7);
+            Controls.Add(label6);
+            Controls.Add(label5);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(vSlider18);
+            Controls.Add(vSlider17);
+            Controls.Add(vSlider16);
+            Controls.Add(vSlider15);
+            Controls.Add(vSlider14);
+            Controls.Add(vSlider13);
+            Controls.Add(vSlider12);
+            Controls.Add(vSlider11);
+            Controls.Add(vSlider10);
+            Controls.Add(vSlider9);
+            Controls.Add(vSlider8);
+            Controls.Add(vSlider7);
+            Controls.Add(vSlider6);
+            Controls.Add(vSlider5);
+            Controls.Add(vSlider4);
+            Controls.Add(vSlider3);
+            Controls.Add(vSlider2);
+            Controls.Add(vSlider1);
+            Controls.Add(onOffSwitch_Equalizer);
+            Controls.Add(label_Equalizer_Enable);
+            DoubleBuffered = true;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)componentResourceManager.GetObject("$this.Icon");
+            MaximizeBox = false;
+            Name = nameof(FrmEqualizer);
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "$EQUALIZER";
+            ResumeLayout(false);
+            PerformLayout();
+        }
+
+        public void SetRealtimeParameters(
+          RuntimeUtils.ConfigProxy.ParamOfBaseSystem paramBaseSystem,
+          RuntimeUtils.ConfigProxy.ParamOfMusicMode paramMusicMode,
+          RuntimeUtils.ConfigProxy.ParamOfMovieMode paramMovieMode,
+          RuntimeUtils.ConfigProxy.ParamOfFreestyle paramFreestyle,
+          RuntimeUtils.ConfigProxy cpConfigProxy)
+        {
+            m_paramBaseSystem = paramBaseSystem;
+            m_paramMusicMode = paramMusicMode;
+            m_paramMovieMode = paramMovieMode;
+            m_paramFreestyle = paramFreestyle;
+            m_cpConfigProxy = cpConfigProxy;
+        }
+
+        public FrmEqualizer()
+        {
+            InitializeComponent();
+            Text = GlobalMessages.EQUALIZER;
+            label_Equalizer_Enable.Text = GlobalMessages.ENABLE;
+            checkBox_RealtimeAdjust.Text = GlobalMessages.EQUALIZER_REALTIME_ADJUST;
+            singleButton_Preset.ButtonText = GlobalMessages.PRESET;
+            singleButton_OK.ButtonText = GlobalMessages.OK;
+            m_ctlEQBandList.Add(vSlider1);
+            m_ctlEQBandList.Add(vSlider2);
+            m_ctlEQBandList.Add(vSlider3);
+            m_ctlEQBandList.Add(vSlider4);
+            m_ctlEQBandList.Add(vSlider5);
+            m_ctlEQBandList.Add(vSlider6);
+            m_ctlEQBandList.Add(vSlider7);
+            m_ctlEQBandList.Add(vSlider8);
+            m_ctlEQBandList.Add(vSlider9);
+            m_ctlEQBandList.Add(vSlider10);
+            m_ctlEQBandList.Add(vSlider11);
+            m_ctlEQBandList.Add(vSlider12);
+            m_ctlEQBandList.Add(vSlider13);
+            m_ctlEQBandList.Add(vSlider14);
+            m_ctlEQBandList.Add(vSlider15);
+            m_ctlEQBandList.Add(vSlider16);
+            m_ctlEQBandList.Add(vSlider17);
+            m_ctlEQBandList.Add(vSlider18);
+            for (int index = 0; index < m_ctlEQBandList.Count; ++index)
+                m_ctlEQBandList[index].Tag = index.ToString();
+            for (int index = 0; index < m_faEQBands.Length; ++index)
+                m_faEQBands[index] = 1f;
+            m_bEQEnabled = false;
+            UpdateUI();
+            foreach (VSlider ctlEqBand in m_ctlEQBandList)
+                ctlEqBand.PositionChangeNotify += new VSlider.PositionChangeEventDelegate(EQBandChanged);
+            onOffSwitch_Equalizer.SwitchChangeNotify += new OnOffSwitch.SwitchChangeEventDelegate(EQSwitchChange);
+        }
+
+        private void UpdateUI()
+        {
+            onOffSwitch_Equalizer.SwitchedOn = m_bEQEnabled;
+            for (int index = 0; index < m_faEQBands.Length; ++index)
+            {
+                float faEqBand = m_faEQBands[index];
+                uint num = (uint)(((double)faEqBand > 1.0 ? (double)((faEqBand - 1f) / 4f * 0.5f + 0.5f) : (double)(faEqBand * 0.5f)) * 100.0);
+                if (num > 100U)
+                    num = 100U;
+                m_ctlEQBandList[index].Position = num;
+            }
+        }
+
+        private void EQBandChanged(float fPercent, VSlider objSender)
+        {
+            if (objSender == null || objSender.Tag == null || !(objSender.Tag is string tag))
+                return;
+            if (!int.TryParse(tag, out int result) || result < 0 || result >= m_faEQBands.Length)
+                return;
+            float num = (double)fPercent >= 0.5 ? (float)(((double)fPercent - 0.5) / 0.5 * 4.0 + 1.0) : fPercent / 0.5f;
+            m_faEQBands[result] = num;
+            if (!checkBox_RealtimeAdjust.Checked)
+                return;
+            if (m_paramBaseSystem.m_nEffectMode == 0U)
+            {
+                m_paramMusicMode.m_rpEqualizerBands[result] = num;
+                m_cpConfigProxy.UpdateParameter(m_paramMusicMode);
+                m_cpConfigProxy.SyncConfig();
+            }
+            if (m_paramBaseSystem.m_nEffectMode == 1U)
+            {
+                m_paramMovieMode.m_rpEqualizerBands[result] = num;
+                m_cpConfigProxy.UpdateParameter(m_paramMovieMode);
+                m_cpConfigProxy.SyncConfig();
+            }
+            if (m_paramBaseSystem.m_nEffectMode != 2U)
+                return;
+            m_paramFreestyle.m_rpEqualizerBands[result] = num;
+            m_cpConfigProxy.UpdateParameter(m_paramFreestyle);
+            m_cpConfigProxy.SyncConfig();
+        }
+
+        private void EQSwitchChange(bool bSwitchedOn, OnOffSwitch objSender)
+        {
+            m_bEQEnabled = bSwitchedOn;
+            if (!checkBox_RealtimeAdjust.Checked)
+                return;
+            if (m_paramBaseSystem.m_nEffectMode == 0U)
+            {
+                m_paramMusicMode.m_bEqualizerEnabled = !m_bEQEnabled ? 0 : 1;
+                m_cpConfigProxy.UpdateParameter(m_paramMusicMode);
+                m_cpConfigProxy.SyncConfig();
+            }
+            if (m_paramBaseSystem.m_nEffectMode == 1U)
+            {
+                m_paramMovieMode.m_bEqualizerEnabled = !m_bEQEnabled ? 0 : 1;
+                m_cpConfigProxy.UpdateParameter(m_paramMovieMode);
+                m_cpConfigProxy.SyncConfig();
+            }
+            if (m_paramBaseSystem.m_nEffectMode != 2U)
+                return;
+            m_paramFreestyle.m_bEqualizerEnabled = !m_bEQEnabled ? 0 : 1;
+            m_cpConfigProxy.UpdateParameter(m_paramFreestyle);
+            m_cpConfigProxy.SyncConfig();
+        }
+
+        public void SetParameters(float[] faEQBands, bool bEQEnabled)
+        {
+            if (faEQBands == null || faEQBands.Length != m_faEQBands.Length)
+                return;
+            Array.Copy(faEQBands, m_faEQBands, m_faEQBands.Length);
+            m_bEQEnabled = bEQEnabled;
+            UpdateUI();
+        }
+
+        public float[] GetParameter()
+        {
+            return m_faEQBands;
+        }
+
+        public bool GetEQEnabled()
+        {
+            return m_bEQEnabled;
+        }
+
+        private void SingleButton_OK_ButtonClickNotify(SingleButton objSender)
+        {
+            DialogResult = DialogResult.OK;
+        }
+
+        private void SingleButton_Preset_ButtonClickNotify(SingleButton objSender)
+        {
+            FrmEQPreset frmEqPreset = new FrmEQPreset();
+            frmEqPreset.SetPreset(m_faEQBands);
+            if (frmEqPreset.ShowDialog() == DialogResult.Cancel)
+                return;
+            float[] preset = frmEqPreset.GetPreset();
+            if (preset == null || preset.Length != m_faEQBands.Length)
+                return;
+            Array.Copy(preset, m_faEQBands, m_faEQBands.Length);
+            if (checkBox_RealtimeAdjust.Checked)
+            {
+                if (m_paramBaseSystem.m_nEffectMode == 0U)
+                {
+                    Array.Copy(m_faEQBands, m_paramMusicMode.m_rpEqualizerBands, m_faEQBands.Length);
+                    m_cpConfigProxy.UpdateParameter(m_paramMusicMode);
+                    m_cpConfigProxy.SyncConfig();
+                }
+                if (m_paramBaseSystem.m_nEffectMode == 1U)
+                {
+                    Array.Copy(m_faEQBands, m_paramMovieMode.m_rpEqualizerBands, m_faEQBands.Length);
+                    m_cpConfigProxy.UpdateParameter(m_paramMovieMode);
+                    m_cpConfigProxy.SyncConfig();
+                }
+                if (m_paramBaseSystem.m_nEffectMode == 2U)
+                {
+                    Array.Copy(m_faEQBands, m_paramFreestyle.m_rpEqualizerBands, m_faEQBands.Length);
+                    m_cpConfigProxy.UpdateParameter(m_paramFreestyle);
+                    m_cpConfigProxy.SyncConfig();
+                }
+            }
+            UpdateUI();
+        }
+
+        private void CheckBox_RealtimeAdjust_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkBox_RealtimeAdjust.Checked)
+                return;
+            if (m_paramBaseSystem.m_nEffectMode == 0U)
+            {
+                m_paramMusicMode.m_bEqualizerEnabled = !m_bEQEnabled ? 0 : 1;
+                Array.Copy(m_faEQBands, m_paramMusicMode.m_rpEqualizerBands, m_faEQBands.Length);
+                m_cpConfigProxy.UpdateParameter(m_paramMusicMode);
+                m_cpConfigProxy.SyncConfig();
+            }
+            if (m_paramBaseSystem.m_nEffectMode == 1U)
+            {
+                m_paramMovieMode.m_bEqualizerEnabled = !m_bEQEnabled ? 0 : 1;
+                Array.Copy(m_faEQBands, m_paramMovieMode.m_rpEqualizerBands, m_faEQBands.Length);
+                m_cpConfigProxy.UpdateParameter(m_paramMovieMode);
+                m_cpConfigProxy.SyncConfig();
+            }
+            if (m_paramBaseSystem.m_nEffectMode != 2U)
+                return;
+            m_paramFreestyle.m_bEqualizerEnabled = !m_bEQEnabled ? 0 : 1;
+            Array.Copy(m_faEQBands, m_paramFreestyle.m_rpEqualizerBands, m_faEQBands.Length);
+            m_cpConfigProxy.UpdateParameter(m_paramFreestyle);
+            m_cpConfigProxy.SyncConfig();
+        }
     }
-  }
 }

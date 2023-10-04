@@ -2,19 +2,25 @@
 
 namespace ViPER4WindowsBin.Utils.Win32GDI
 {
-  internal class GDIMutex
-  {
-    private Mutex MutexLock = new Mutex();
-
-    public GDIMutex(bool Locking)
+    internal class GDIMutex
     {
-      if (!Locking)
-        return;
-      this.MutexLock.WaitOne();
+        private readonly Mutex MutexLock = new Mutex();
+
+        public GDIMutex(bool Locking)
+        {
+            if (!Locking)
+                return;
+            MutexLock.WaitOne();
+        }
+
+        public void WaitLock()
+        {
+            MutexLock.WaitOne();
+        }
+
+        public void Unlock()
+        {
+            MutexLock.ReleaseMutex();
+        }
     }
-
-    public void WaitLock() => this.MutexLock.WaitOne();
-
-    public void Unlock() => this.MutexLock.ReleaseMutex();
-  }
 }

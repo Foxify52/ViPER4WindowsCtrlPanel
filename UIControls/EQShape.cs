@@ -7,126 +7,126 @@ using ViPER4WindowsBin.Utils;
 
 namespace ViPER4WindowsBin.UIControls
 {
-  public class EQShape : UserControl
-  {
-    private IContainer components;
-    private Color m_clBackColor = Color.White;
-    private Color m_clForeColor = Color.Black;
-    private float[] m_fEQBands = new float[18];
-    private float[] m_fEQResponse = new float[256];
-
-    protected override void Dispose(bool disposing)
+    public class EQShape : UserControl
     {
-      if (disposing && this.components != null)
-        this.components.Dispose();
-      base.Dispose(disposing);
-    }
+        private readonly IContainer components;
+        private Color m_clBackColor = Color.White;
+        private Color m_clForeColor = Color.Black;
+        private readonly float[] m_fEQBands = new float[18];
+        private readonly float[] m_fEQResponse = new float[256];
 
-    private void InitializeComponent()
-    {
-      this.SuspendLayout();
-      this.AutoScaleDimensions = new SizeF(6f, 12f);
-      this.AutoScaleMode = AutoScaleMode.Font;
-      this.DoubleBuffered = true;
-      this.Name = "EQShapre";
-      this.Size = new Size(274, 129);
-      this.ResumeLayout(false);
-    }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && components != null)
+                components.Dispose();
+            base.Dispose(disposing);
+        }
 
-    public EQShape()
-    {
-      this.InitializeComponent();
-      for (int index = 0; index < this.m_fEQBands.Length; ++index)
-        this.m_fEQBands[index] = 1f;
-      this.ZeroArray();
-      float[] fArray = RuntimeUtils.EqualizerUtils.EstimateEqualizerResponse(this.m_fEQBands);
-      if (fArray != null)
-        this.ScaleArray(fArray);
-      this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-      this.SetStyle(ControlStyles.DoubleBuffer, true);
-      this.SetStyle(ControlStyles.ResizeRedraw, true);
-      this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-      this.SetStyle(ControlStyles.UserPaint, true);
-    }
+        private void InitializeComponent()
+        {
+            SuspendLayout();
+            AutoScaleDimensions = new SizeF(6f, 12f);
+            AutoScaleMode = AutoScaleMode.Font;
+            DoubleBuffered = true;
+            Name = "EQShapre";
+            Size = new Size(274, 129);
+            ResumeLayout(false);
+        }
 
-    public Color ShapeBackColor
-    {
-      get => this.m_clBackColor;
-      set
-      {
-        this.m_clBackColor = value;
-        this.Invalidate();
-      }
-    }
+        public EQShape()
+        {
+            InitializeComponent();
+            for (int index = 0; index < m_fEQBands.Length; ++index)
+                m_fEQBands[index] = 1f;
+            ZeroArray();
+            float[] fArray = RuntimeUtils.EqualizerUtils.EstimateEqualizerResponse(m_fEQBands);
+            if (fArray != null)
+                ScaleArray(fArray);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.DoubleBuffer, true);
+            SetStyle(ControlStyles.ResizeRedraw, true);
+            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.UserPaint, true);
+        }
 
-    public Color ShapeForeColor
-    {
-      get => this.m_clForeColor;
-      set
-      {
-        this.m_clForeColor = value;
-        this.Invalidate();
-      }
-    }
+        public Color ShapeBackColor
+        {
+            get => m_clBackColor;
+            set
+            {
+                m_clBackColor = value;
+                Invalidate();
+            }
+        }
 
-    public void SetEqualizerBands(float[] rEQBands)
-    {
-      if (rEQBands == null || rEQBands.Length != 18)
-        return;
-      Array.Copy((Array) rEQBands, (Array) this.m_fEQBands, this.m_fEQBands.Length);
-      this.ZeroArray();
-      float[] fArray = RuntimeUtils.EqualizerUtils.EstimateEqualizerResponse(this.m_fEQBands);
-      if (fArray != null)
-        this.ScaleArray(fArray);
-      this.Invalidate();
-    }
+        public Color ShapeForeColor
+        {
+            get => m_clForeColor;
+            set
+            {
+                m_clForeColor = value;
+                Invalidate();
+            }
+        }
 
-    private void ZeroArray()
-    {
-      for (int index = 0; index < this.m_fEQResponse.Length; ++index)
-        this.m_fEQResponse[index] = 0.0f;
-    }
+        public void SetEqualizerBands(float[] rEQBands)
+        {
+            if (rEQBands == null || rEQBands.Length != 18)
+                return;
+            Array.Copy(rEQBands, m_fEQBands, m_fEQBands.Length);
+            ZeroArray();
+            float[] fArray = RuntimeUtils.EqualizerUtils.EstimateEqualizerResponse(m_fEQBands);
+            if (fArray != null)
+                ScaleArray(fArray);
+            Invalidate();
+        }
 
-    private void ScaleArray(float[] fArray)
-    {
-      int num = fArray.Length / (this.m_fEQResponse.Length + 1);
-      int index1 = 0;
-      for (int index2 = 0; index1 < fArray.Length && index2 < this.m_fEQResponse.Length; ++index2)
-      {
-        this.m_fEQResponse[index2] = fArray[index1];
-        index1 += num;
-      }
-    }
+        private void ZeroArray()
+        {
+            for (int index = 0; index < m_fEQResponse.Length; ++index)
+                m_fEQResponse[index] = 0.0f;
+        }
 
-    protected override void OnPaint(PaintEventArgs e)
-    {
-      Graphics graphics = e.Graphics;
-      graphics.SmoothingMode = SmoothingMode.HighQuality;
-      graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-      graphics.Clear(this.m_clBackColor);
-      graphics.DrawRectangle(new Pen(Color.Gray, 1f), this.ClientRectangle);
-      double num1 = ((double) this.Width - 2.0) / (double) (this.m_fEQResponse.Length + 1);
-      float num2 = (float) ((double) this.m_fEQResponse[0] * (double) (this.Height - 2) + 1.0);
-      if ((double) num2 < 2.0)
-        num2 = 2f;
-      if ((double) num2 > (double) this.Height - 2.0)
-        num2 = (float) this.Height - 2f;
-      PointF pt1 = new PointF(2f, (float) this.Height - num2);
-      for (int index = 1; index < this.m_fEQResponse.Length; ++index)
-      {
-        float x = (float) index * (float) num1 + 2f;
-        if ((double) x > (double) this.Width - 1.0)
-          break;
-        float num3 = (float) ((double) this.m_fEQResponse[index] * (double) (this.Height - 2) + 1.0);
-        if ((double) num3 < 2.0)
-          num3 = 2f;
-        if ((double) num3 > (double) this.Height - 2.0)
-          num3 = (float) this.Height - 2f;
-        float y = (float) this.Height - num3;
-        graphics.DrawLine(new Pen(this.m_clForeColor, 1f), pt1, new PointF(x, y));
-        pt1.X = x;
-        pt1.Y = y;
-      }
+        private void ScaleArray(float[] fArray)
+        {
+            int num = fArray.Length / (m_fEQResponse.Length + 1);
+            int index1 = 0;
+            for (int index2 = 0; index1 < fArray.Length && index2 < m_fEQResponse.Length; ++index2)
+            {
+                m_fEQResponse[index2] = fArray[index1];
+                index1 += num;
+            }
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Graphics graphics = e.Graphics;
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
+            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            graphics.Clear(m_clBackColor);
+            graphics.DrawRectangle(new Pen(Color.Gray, 1f), ClientRectangle);
+            double num1 = (Width - 2.0) / (m_fEQResponse.Length + 1);
+            float num2 = (float)(m_fEQResponse[0] * (double)(Height - 2) + 1.0);
+            if ((double)num2 < 2.0)
+                num2 = 2f;
+            if ((double)num2 > Height - 2.0)
+                num2 = Height - 2f;
+            PointF pt1 = new PointF(2f, Height - num2);
+            for (int index = 1; index < m_fEQResponse.Length; ++index)
+            {
+                float x = index * (float)num1 + 2f;
+                if ((double)x > Width - 1.0)
+                    break;
+                float num3 = (float)(m_fEQResponse[index] * (double)(Height - 2) + 1.0);
+                if ((double)num3 < 2.0)
+                    num3 = 2f;
+                if ((double)num3 > Height - 2.0)
+                    num3 = Height - 2f;
+                float y = Height - num3;
+                graphics.DrawLine(new Pen(m_clForeColor, 1f), pt1, new PointF(x, y));
+                pt1.X = x;
+                pt1.Y = y;
+            }
+        }
     }
-  }
 }
